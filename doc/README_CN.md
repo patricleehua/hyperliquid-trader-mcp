@@ -1,10 +1,10 @@
 # Hyperliquid MCP Trader
 
-一个基于 [Model Context Protocol (MCP)](https://modelcontextprotocol.io) 的交易工具集成，封装了 Hyperliquid 官方 Python SDK 的常用交易接口，并以 MCP 工具的形式对外提供：
+一个基于 [Model Context Protocol (MCP)](https://modelcontextprotocol.io) 的交易工具集成，封装了 [Hyperliquid 官方 Python SDK](https://github.com/hyperliquid-dex/hyperliquid-python-sdk) 的常用交易接口，并以 MCP 工具的形式对外提供：
 
 - `get_mark_price(symbol)`：查询标记价格  
-- `place_order(symbol, side, qty, price, tif)`：限价/市价下单  
-- `place_spot_market/limit/order(...)`：现货下单入口（当前 SDK 暂不支持，调用会返回未实现错误）  
+- `place_market/limit(symbol, side, qty, price, tif)`：限价/市价下单  
+- `place_spot_market/limit(...)`：现货下单入口（当前 SDK 暂不支持，调用会返回未实现错误）  
 - `cancel_order(order_id)`：撤销订单  
 - `get_positions(dex)`：查询当前持仓（dex 可选：空字符串、`perp`、`spot`）  
 - `get_balances(dex)`：查询账户资金/权益（同上，附带保证金汇总）
@@ -59,3 +59,7 @@ uv run --env-file .env python -m app.mcp_server --transport sse
 ---
 
 项目骨架参考自 Hyperliquid 官方/社区 SDK 示例与 MCP Python SDK 文档。
+
+[HyperLiquid 去中心化交易所](https://hyperfoundation.org)
+
+[什么是模型上下文协议(MCP)?](https://modelcontextprotocol.io/docs/getting-started/intro)

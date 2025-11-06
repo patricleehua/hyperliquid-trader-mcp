@@ -3,11 +3,11 @@
 # Hyperliquid MCP Trader
 
 A trading toolchain built on the [Model Context Protocol (MCP)](https://modelcontextprotocol.io).  
-It wraps commonly used Hyperliquid Python SDK endpoints and exposes them as MCP tools:
+It wraps commonly used [Hyperliquid Python SDK](https://github.com/hyperliquid-dex/hyperliquid-python-sdk) endpoints and exposes them as MCP tools:
 
 - `get_mark_price(symbol)`: fetch the latest mark price  
-- `place_order(symbol, side, qty, price, tif)`: place a market or limit order  
-- `place_spot_market/limit/order(...)`: spot entry points (not yet implemented in the current Hyperliquid SDK; calls raise `NotImplementedError`)  
+- `place_omarket/limit(symbol, side, qty, price, tif)`: place a market or limit order  
+- `place_spot_market/limit(...)`: spot entry points (not yet implemented in the current Hyperliquid SDK; calls raise `NotImplementedError`)  
 - `cancel_order(order_id)`: cancel an order by id  
 - `get_positions(dex)`: return current positions (`dex` can be empty, `perp`, or `spot`)  
 - `get_balances(dex)`: return balances and margin summaries (same `dex` options as above)
@@ -64,3 +64,7 @@ Environment variables are also supported: `MCP_TRANSPORT=streamable-http`, `FAST
 ---
 
 The project structure follows patterns from Hyperliquid’s official/community SDK samples and the MCP Python SDK documentation.
+
+[HyperLiquid DEX](https://hyperfoundation.org)
+
+[What is the Model Context Protocol (MCP)?](https://modelcontextprotocol.io/docs/getting-started/intro)
