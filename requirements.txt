@@ -1,0 +1,2 @@
+mcp[fastmcp]>=0.1.0
+hyperliquid-python-sdk>=0.9.0
