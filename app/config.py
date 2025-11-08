@@ -69,3 +69,9 @@ SKIP_WEBSOCKET: Final[bool] = (_skip_ws_raw or "false").lower() in {
     "true",
     "yes",
 }
+
+# Optional HTTP guard: require MCP requests to send a specific header/value pair.
+_header_value_raw = _clean_env_value(os.getenv("MCP_AUTH_HEADER_VALUE"))
+REQUEST_HEADER_VALUE: Final[str | None] = _header_value_raw
+_header_name_raw = _clean_env_value(os.getenv("MCP_AUTH_HEADER_NAME"))
+REQUEST_HEADER_NAME: Final[str] = _header_name_raw or "Authorization"

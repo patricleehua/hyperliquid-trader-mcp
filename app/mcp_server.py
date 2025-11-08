@@ -11,10 +11,41 @@ import os
 import sys
 
 from mcp.server.fastmcp import FastMCP
+from starlette.applications import Starlette
 
+from .config import REQUEST_HEADER_NAME, REQUEST_HEADER_VALUE
 from .hl_client import HLClient
+from .http_guard import HeaderGuardConfig, HeaderValidationMiddleware
 
-server = FastMCP(name="hyperliquid-trader")
+
+class GuardedFastMCP(FastMCP):
+    """FastMCP extension that injects a header-validation middleware."""
+
+    def __init__(self, *args, header_guard: HeaderGuardConfig | None = None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._header_guard = header_guard
+
+    def _apply_header_guard(self, app: Starlette) -> Starlette:
+        if self._header_guard:
+            app.add_middleware(HeaderValidationMiddleware, guard=self._header_guard)
+        return app
+
+    def sse_app(self, mount_path: Optional[str] = None) -> Starlette:
+        app = super().sse_app(mount_path)
+        return self._apply_header_guard(app)
+
+    def streamable_http_app(self) -> Starlette:
+        app = super().streamable_http_app()
+        return self._apply_header_guard(app)
+
+
+header_guard = (
+    HeaderGuardConfig(name=REQUEST_HEADER_NAME, value=REQUEST_HEADER_VALUE)
+    if REQUEST_HEADER_VALUE
+    else None
+)
+
+server = GuardedFastMCP(name="hyperliquid-trader", header_guard=header_guard)
 hl = HLClient()
 
 TRANSPORT_CHOICES = ("stdio", "sse", "streamable-http")
