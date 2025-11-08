@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  hyperliquid-mcp:
+    image: patricleee/hyperliquid-trading-mcp:1.0.0
+    restart: unless-stopped
+    env_file:
+      - .env  # provide HL_ACCOUNT_ADDRESS/HL_SECRET_KEY/HL_NETWORK here
+    environment:
+      # HL_ACCOUNT_ADDRESS: 0xYourMainWalletAddress
+      # HL_SECRET_KEY: 0xYourApiWalletPrivateKey
+      # HL_NETWORK: testnet
+      MCP_AUTH_HEADER_VALUE: ${MCP_AUTH_HEADER_VALUE:-your-shared-secret}
+      MCP_AUTH_HEADER_NAME: ${MCP_AUTH_HEADER_NAME:-Authorization}
+      MCP_TRANSPORT: streamable-http
+      FASTMCP_HOST: 0.0.0.0
+      FASTMCP_PORT: 9000
+    ports:
+      - "9000:9000"
